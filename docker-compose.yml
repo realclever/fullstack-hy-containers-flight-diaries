@@ -1,0 +1,22 @@
+services:
+  frontend:
+    image: flight-diaries-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+
+  backend:
+    image: flight-diaries-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+
+  nginx:
+    image: nginx:1.29-alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    depends_on:
+      - frontend
+      - backend
